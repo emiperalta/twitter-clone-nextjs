@@ -1,0 +1,18 @@
+.btn {
+  border-radius: 9999px;
+  padding: 15px 27px;
+  font-size: 15px;
+  color: #fff;
+  background-color: #000;
+  outline: none;
+  border: none;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn:hover {
+  opacity: 0.8;
+}
+.btn:active {
+  opacity: 0.9;
+}
