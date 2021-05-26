@@ -10,20 +10,25 @@ const firebaseConfig = {
   measurementId: 'G-MRBZCSN2TS',
 };
 
-!firebase.app.length && firebase.initializeApp(firebaseConfig);
+!firebase.apps.length && firebase.initializeApp(firebaseConfig);
+
+const mapUserFromFirebase = user => {
+  const { displayName, email, photoURL } = user;
+  return {
+    avatar: photoURL,
+    username: displayName,
+    email,
+  };
+};
+
+export const onAuthStateChanged = onChange => {
+  return firebase.auth().onAuthStateChanged(user => {
+    const normalizedUser = user ? mapUserFromFirebase(user) : null;
+    onChange(normalizedUser);
+  });
+};
 
 export const loginWithGitHub = () => {
   const githubProvider = new firebase.auth.GithubAuthProvider();
-  return firebase
-    .auth()
-    .signInWithPopup(githubProvider)
-    .then(user => {
-      const { username, profile } = user.additionalUserInfo;
-      const { avatar_url, blog } = profile;
-      return {
-        avatar: avatar_url,
-        username,
-        url: blog,
-      };
-    });
+  return firebase.auth().signInWithPopup(githubProvider);
 };

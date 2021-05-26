@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  border-radius: 9999px;
+  width: 45px;
+  height: 45px;
+  border: 1px solid rgba(204, 204, 204, 0.6);
+}
+
+.avatar + strong {
+  margin-left: 8px;
+}

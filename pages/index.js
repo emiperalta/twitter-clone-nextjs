@@ -1,41 +1,42 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 
-import Button from '../components/Button';
-import { loginWithGitHub } from '../firebase/client';
+import { loginWithGitHub, onAuthStateChanged } from 'firebase/client';
 
-import styles from '../styles/Home.module.css';
+import Button from 'components/Button';
+import Avatar from 'components/Avatar';
 
-export default function Home() {
-  const [user, setUser] = useState(null);
+import styles from 'styles/Login.module.css';
+
+export default function Login() {
+  const [user, setUser] = useState(undefined);
+
+  useEffect(() => {
+    onAuthStateChanged(user => setUser(user));
+  }, []);
 
   const handleClick = () => {
     loginWithGitHub()
-      .then(user => {
-        setUser(user);
-        console.log(user);
-      })
+      .then(user => setUser(user))
       .catch(err => console.error(err));
   };
 
   return (
-    <div>
+    <>
       <Head>
-        <title>Home</title>
+        <title>Login</title>
         <meta name='description' content='Homepage' />
       </Head>
-
-      <div className={styles.container}>
-        <main className={styles.main}>
-          <section className={styles.section}>
-            <h1 className={styles.title}>devter</h1>
-            <h2 className={styles.subtitle}>
-              Talk about development with developers
-            </h2>
-            <Button onClick={handleClick}>Login with GitHub</Button>
-          </section>
-        </main>
-      </div>
-    </div>
+      <section className={styles.section}>
+        <h1 className={styles.title}>devter</h1>
+        <h2 className={styles.subtitle}>Talk about development with developers</h2>
+        {user === null && <Button onClick={handleClick}>Login with GitHub</Button>}
+        {user && user.avatar && (
+          <div>
+            <Avatar alt={user.username} src={user.avatar} text={user.username} />
+          </div>
+        )}
+      </section>
+    </>
   );
 }
