@@ -24,8 +24,8 @@ export default function Login() {
   return (
     <>
       <Head>
-        <title>Login</title>
-        <meta name='description' content='Homepage' />
+        <title>devter</title>
+        <meta name='description' content='login' />
       </Head>
       <section className={styles.section}>
         <h1 className={styles.title}>devter</h1>

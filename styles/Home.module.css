@@ -1,20 +1,26 @@
 .header {
-  height: 49px;
+  height: 53px;
+  background-color: #fff;
   border-bottom: 1px solid #ccc;
   display: flex;
   align-items: center;
   position: fixed;
   width: 100%;
 }
+
 .header > h2 {
   font-size: 20px;
   font-weight: 700;
 }
 
+.deveets {
+  padding-top: 49px;
+}
+
 .nav {
   position: fixed;
   bottom: 0;
-  height: 49px;
-  border-top: 1px solid #ccc;
+  height: 53px;
+  background-color: #fff;
   width: 100%;
 }
