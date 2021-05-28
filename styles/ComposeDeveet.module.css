@@ -1,0 +1,17 @@
+.compose {
+  display: flex;
+  padding: 4px 12px;
+}
+
+.compose__deveet {
+  width: 100%;
+  font-size: 21px;
+  outline: none;
+  resize: none;
+  min-height: 200px;
+  border: 0.1px solid transparent;
+}
+
+.compose__btn {
+  padding: 15px;
+}

@@ -1,24 +1,26 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 
-import { loginWithGitHub, onAuthStateChanged } from 'firebase/client';
+import useUser from 'hooks/useUser';
+
+import { loginWithGitHub } from 'firebase/client';
 
 import Button from 'components/Button';
-import Avatar from 'components/Avatar';
+import Spinner from 'components/Spinner';
 
 import styles from 'styles/Login.module.css';
 
 export default function Login() {
-  const [user, setUser] = useState(undefined);
+  const user = useUser();
+  const router = useRouter();
 
   useEffect(() => {
-    onAuthStateChanged(user => setUser(user));
-  }, []);
+    user && router.replace('/home');
+  }, [user]);
 
   const handleClick = () => {
-    loginWithGitHub()
-      .then(user => setUser(user))
-      .catch(err => console.error(err));
+    loginWithGitHub().catch(err => console.error(err));
   };
 
   return (
@@ -31,11 +33,7 @@ export default function Login() {
         <h1 className={styles.title}>devter</h1>
         <h2 className={styles.subtitle}>Talk about development with developers</h2>
         {user === null && <Button onClick={handleClick}>Login with GitHub</Button>}
-        {user && user.avatar && (
-          <div>
-            <Avatar alt={user.username} src={user.avatar} text={user.username} />
-          </div>
-        )}
+        {user === undefined && <Spinner />}
       </section>
     </>
   );
