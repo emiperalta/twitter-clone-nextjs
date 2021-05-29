@@ -15,10 +15,10 @@
   margin-right: 5px;
 }
 
-.message {
+.content {
   font-weight: 400;
   line-height: 20px;
 }
-.message > p {
+.content > p {
   margin: 0;
 }

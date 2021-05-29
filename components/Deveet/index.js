@@ -11,12 +11,13 @@ export default function Deveet({ deveet }) {
       <section>
         <div className={styles.user}>
           <span>
-            <strong>{deveet.name}</strong>
+            <strong>{deveet.username}</strong>
           </span>
-          <span>@{deveet.username}</span>
+          <span>{deveet.createdAt}</span>
+          {/* <span>@{deveet.username}</span> */}
         </div>
-        <div className={styles.message}>
-          <p>{deveet.message}</p>
+        <div className={styles.content}>
+          <p>{deveet.content}</p>
         </div>
       </section>
     </article>

@@ -12,23 +12,60 @@ const firebaseConfig = {
 
 !firebase.apps.length && firebase.initializeApp(firebaseConfig);
 
+const db = firebase.firestore();
+
 const mapUserFromFirebase = user => {
-  const { displayName, email, photoURL } = user;
+  const { displayName, email, photoURL, uid } = user;
   return {
     avatar: photoURL,
     username: displayName,
     email,
+    uid,
   };
 };
 
-export const onAuthStateChanged = onChange => {
+// auth
+const onAuthStateChanged = onChange => {
   return firebase.auth().onAuthStateChanged(user => {
     const normalizedUser = user ? mapUserFromFirebase(user) : null;
     onChange(normalizedUser);
   });
 };
 
-export const loginWithGitHub = () => {
+const loginWithGitHub = () => {
   const githubProvider = new firebase.auth.GithubAuthProvider();
   return firebase.auth().signInWithPopup(githubProvider);
 };
+
+// db operations
+const addDeveet = ({ avatar, content, userId, username }) => {
+  return db.collection('deveets').add({
+    avatar,
+    content,
+    userId,
+    username,
+    createdAt: firebase.firestore.Timestamp.now(),
+    likesCount: 0,
+    sharedCount: 0,
+  });
+};
+
+const getDeveets = () => {
+  return db
+    .collection('deveets')
+    .get()
+    .then(({ docs }) =>
+      docs.map(doc => {
+        const data = doc.data();
+        const id = doc.id;
+
+        return {
+          ...data,
+          id,
+          createdAt: data.createdAt.toDate().toLocaleDateString(),
+        };
+      })
+    );
+};
+
+export { addDeveet, getDeveets, loginWithGitHub, onAuthStateChanged };

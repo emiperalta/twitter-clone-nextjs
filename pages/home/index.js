@@ -6,22 +6,20 @@ import useUser from 'hooks/useUser';
 import Deveet from 'components/Deveet';
 
 import styles from 'styles/Home.module.css';
+import { getDeveets } from 'firebase/client';
 
 export default function Home() {
   const [timeline, setTimeline] = useState([]);
   const user = useUser();
 
   useEffect(() => {
-    user &&
-      fetch('/api/statuses/home_timeline')
-        .then(res => res.json())
-        .then(data => setTimeline(data));
+    user && getDeveets().then(res => setTimeline(res));
   }, [user]);
 
   return (
     <>
       <Head>
-        <title>Home / devter</title>
+        <title>Inicio / devter</title>
         <meta name='description' content='homepage' />
       </Head>
 
