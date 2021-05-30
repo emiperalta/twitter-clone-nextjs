@@ -53,16 +53,16 @@ const addDeveet = ({ avatar, content, userId, username }) => {
 const getDeveets = () => {
   return db
     .collection('deveets')
+    .orderBy('createdAt', 'desc')
     .get()
     .then(({ docs }) =>
       docs.map(doc => {
         const data = doc.data();
         const id = doc.id;
-
         return {
           ...data,
           id,
-          createdAt: data.createdAt.toDate().toLocaleDateString(),
+          createdAt: +data.createdAt.toDate(),
         };
       })
     );

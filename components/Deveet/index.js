@@ -1,8 +1,12 @@
 import Avatar from 'components/Avatar';
 
+import useTimeAgo from 'hooks/useTimeAgo';
+
 import styles from 'styles/Deveet.module.css';
 
 export default function Deveet({ deveet }) {
+  const timeago = useTimeAgo(deveet.createdAt);
+
   return (
     <article key={deveet.id} className={styles.deveet}>
       <div className={styles.avatar}>
@@ -13,7 +17,8 @@ export default function Deveet({ deveet }) {
           <span>
             <strong>{deveet.username}</strong>
           </span>
-          <span>{deveet.createdAt}</span>
+          <span> · </span>
+          <span>{timeago}</span>
           {/* <span>@{deveet.username}</span> */}
         </div>
         <div className={styles.content}>
