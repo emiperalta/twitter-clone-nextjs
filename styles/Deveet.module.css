@@ -22,3 +22,10 @@
 .content > p {
   margin: 0;
 }
+
+.img {
+  border-radius: 15px;
+  height: auto;
+  margin-top: 10px;
+  width: 100%;
+}

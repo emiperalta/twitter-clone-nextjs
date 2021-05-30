@@ -25,23 +25,24 @@ const mapUserFromFirebase = user => {
 };
 
 // auth
-const onAuthStateChanged = onChange => {
+export const onAuthStateChanged = onChange => {
   return firebase.auth().onAuthStateChanged(user => {
     const normalizedUser = user ? mapUserFromFirebase(user) : null;
     onChange(normalizedUser);
   });
 };
 
-const loginWithGitHub = () => {
+export const loginWithGitHub = () => {
   const githubProvider = new firebase.auth.GithubAuthProvider();
   return firebase.auth().signInWithPopup(githubProvider);
 };
 
 // db operations
-const addDeveet = ({ avatar, content, userId, username }) => {
+export const addDeveet = ({ avatar, content, img, userId, username }) => {
   return db.collection('deveets').add({
     avatar,
     content,
+    img,
     userId,
     username,
     createdAt: firebase.firestore.Timestamp.now(),
@@ -50,7 +51,7 @@ const addDeveet = ({ avatar, content, userId, username }) => {
   });
 };
 
-const getDeveets = () => {
+export const getDeveets = () => {
   return db
     .collection('deveets')
     .orderBy('createdAt', 'desc')
@@ -68,4 +69,7 @@ const getDeveets = () => {
     );
 };
 
-export { addDeveet, getDeveets, loginWithGitHub, onAuthStateChanged };
+export const uploadImage = file => {
+  const ref = firebase.storage().ref(`images/${file.name}`);
+  return ref.put(file);
+};

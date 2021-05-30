@@ -1,5 +1,6 @@
 .compose {
   display: flex;
+  flex-direction: column;
   padding: 4px 12px;
 }
 
@@ -8,8 +9,38 @@
   font-size: 21px;
   outline: none;
   resize: none;
-  min-height: 200px;
-  border: 0.1px solid transparent;
+  min-height: 150px;
+  padding: 12px 0;
+  border-radius: 4px;
+}
+
+.compose__img {
+  align-items: center;
+  display: flex;
+  position: relative;
+}
+.compose__img button {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 9999px;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  height: 32px;
+  left: 8px;
+  position: absolute;
+  top: 8px;
+  transition: background-color 0.3s ease;
+  width: 32px;
+}
+.compose__img button:hover {
+  background-color: rgb(44, 44, 44);
+}
+.compose__img img {
+  border-radius: 15px;
+  height: auto;
+  width: 100%;
 }
 
 .compose__btn {

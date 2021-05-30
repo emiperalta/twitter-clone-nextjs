@@ -24,6 +24,7 @@ export default function Deveet({ deveet }) {
         <div className={styles.content}>
           <p>{deveet.content}</p>
         </div>
+        {deveet.img && <img src={deveet.img} className={styles.img} />}
       </section>
     </article>
   );

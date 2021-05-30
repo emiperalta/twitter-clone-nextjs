@@ -1,12 +1,17 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
+
+import { getDeveets } from 'firebase/client';
 
 import useUser from 'hooks/useUser';
 
 import Deveet from 'components/Deveet';
+import CreateIcon from 'components/Icons/Create';
+import HomeIcon from 'components/Icons/Home';
+import SearchIcon from 'components/Icons/Search';
 
 import styles from 'styles/Home.module.css';
-import { getDeveets } from 'firebase/client';
 
 export default function Home() {
   const [timeline, setTimeline] = useState([]);
@@ -31,7 +36,23 @@ export default function Home() {
           <Deveet deveet={deveet} key={deveet.id} />
         ))}
       </section>
-      <nav className={styles.nav}></nav>
+      <nav className={styles.nav}>
+        <Link href='/home'>
+          <a>
+            <HomeIcon width={32} height={32} />
+          </a>
+        </Link>
+        <Link href='/explore'>
+          <a>
+            <SearchIcon width={32} height={32} />
+          </a>
+        </Link>
+        <Link href='/compose/deveet'>
+          <a>
+            <CreateIcon width={32} height={32} />
+          </a>
+        </Link>
+      </nav>
     </>
   );
 }
