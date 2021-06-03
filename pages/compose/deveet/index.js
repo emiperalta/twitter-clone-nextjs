@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 import { addDeveet, uploadImage } from 'firebase/client';
 
 import useUser from 'hooks/useUser';
 
+import Avatar from 'components/Avatar';
 import Button from 'components/Button';
 import CloseIcon from 'components/Icons/Close';
 
@@ -79,30 +80,35 @@ export default function ComposeDeveet() {
         <title>Inicio / devter</title>
         <meta name='description' content='composer/deveet' />
       </Head>
-      <form onSubmit={handleSubmit}>
-        <section className={styles.compose}>
-          <textarea
-            className={styles.compose__deveet}
-            onDragEnter={handleDragEnter}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-            onChange={handleChange}
-            placeholder='¿Qué está pasando?'
-            value={message}
-          ></textarea>
-          {imgURL && (
-            <section className={styles.compose__img}>
-              <button onClick={() => setImgURL(null)}>
-                <CloseIcon strokeWidth={2} />
-              </button>
-              <img src={imgURL} />
-            </section>
-          )}
+      <div className={styles.container}>
+        <section className={styles.avatar}>
+          {user && <Avatar src={user.avatar} />}
         </section>
-        <div className={styles.compose__btn}>
-          <Button disabled={isButtonDisabled}>Devitear</Button>
-        </div>
-      </form>
+        <form onSubmit={handleSubmit}>
+          <section className={styles.compose}>
+            <textarea
+              className={styles.compose__deveet}
+              onChange={handleChange}
+              onDragEnter={handleDragEnter}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+              placeholder='¿Qué está pasando?'
+              value={message}
+            />
+            {imgURL && (
+              <section className={styles.compose__img}>
+                <button onClick={() => setImgURL(null)}>
+                  <CloseIcon strokeWidth={2} />
+                </button>
+                <img src={imgURL} />
+              </section>
+            )}
+          </section>
+          <div className={styles.compose__btn}>
+            <Button disabled={isButtonDisabled}>Devitear</Button>
+          </div>
+        </form>
+      </div>
       <style jsx>{`
         textarea {
           border: ${drag == 1 ? '2px dashed #09f' : '2px solid transparent'};

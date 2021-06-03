@@ -1,22 +1,32 @@
+.container {
+  display: flex;
+  padding: 4px 16px;
+}
+
+.avatar {
+  margin: 0 12px 0 0;
+  padding: 4px 0 0;
+}
+
 .compose {
   display: flex;
   flex-direction: column;
-  padding: 4px 12px;
+  padding: 12px 0;
 }
 
 .compose__deveet {
-  width: 100%;
+  border-radius: 4px;
   font-size: 21px;
+  min-height: 110px;
   outline: none;
   resize: none;
-  min-height: 150px;
-  padding: 12px 0;
-  border-radius: 4px;
+  width: 100%;
 }
 
 .compose__img {
   align-items: center;
   display: flex;
+  margin-top: 10px;
   position: relative;
 }
 .compose__img button {

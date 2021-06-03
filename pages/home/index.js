@@ -6,8 +6,8 @@ import { getDeveets } from 'firebase/client';
 
 import useUser from 'hooks/useUser';
 
-import Deveet from 'components/Deveet';
 import CreateIcon from 'components/Icons/Create';
+import Deveet from 'components/Deveet';
 import HomeIcon from 'components/Icons/Home';
 import SearchIcon from 'components/Icons/Search';
 
