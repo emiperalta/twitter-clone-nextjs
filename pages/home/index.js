@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 
-import { getDeveets } from 'firebase/client';
+import { listenLatestDeveets } from 'firebase/client';
 
 import useUser from 'hooks/useUser';
 
@@ -18,7 +18,10 @@ export default function Home() {
   const user = useUser();
 
   useEffect(() => {
-    user && getDeveets().then(res => setTimeline(res));
+    if (user) {
+      const unsubscribe = listenLatestDeveets(newDeveets => setTimeline(newDeveets));
+      return () => unsubscribe && unsubscribe();
+    }
   }, [user]);
 
   return (
@@ -42,7 +45,7 @@ export default function Home() {
             <HomeIcon width={32} height={32} />
           </a>
         </Link>
-        <Link href='/explore'>
+        <Link href='/home'>
           <a>
             <SearchIcon width={32} height={32} />
           </a>

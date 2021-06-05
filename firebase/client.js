@@ -51,22 +51,35 @@ export const addDeveet = ({ avatar, content, img, userId, username }) => {
   });
 };
 
+const mapDeveetFromFirebaseToDeveetObject = doc => {
+  const data = doc.data();
+  const id = doc.id;
+  return {
+    ...data,
+    id,
+    createdAt: +data.createdAt.toDate(),
+  };
+};
+
+export const listenLatestDeveets = callback => {
+  return db
+    .collection('deveets')
+    .orderBy('createdAt', 'desc')
+    .limit(20)
+    .onSnapshot(({ docs }) => {
+      const latestDeveets = docs.map(doc =>
+        mapDeveetFromFirebaseToDeveetObject(doc)
+      );
+      callback(latestDeveets);
+    });
+};
+
 export const getDeveets = () => {
   return db
     .collection('deveets')
     .orderBy('createdAt', 'desc')
     .get()
-    .then(({ docs }) =>
-      docs.map(doc => {
-        const data = doc.data();
-        const id = doc.id;
-        return {
-          ...data,
-          id,
-          createdAt: +data.createdAt.toDate(),
-        };
-      })
-    );
+    .then(({ docs }) => docs.map(doc => mapDeveetFromFirebaseToDeveetObject(doc)));
 };
 
 export const uploadImage = file => {

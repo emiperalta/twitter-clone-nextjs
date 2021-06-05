@@ -16,11 +16,6 @@ export default function DeveetPage({ deveet }) {
   );
 }
 
-/*
-TODO: fix this, because when building this app with npm run build, 
-      the request to the api endpoint results in an error
-*/
-
 export async function getStaticPaths() {
   const res = await fetch('http://localhost:3000/api/deveets');
   const deveets = await res.json();
