@@ -1,9 +1,5 @@
-const DATE_UNITS = [
-  ['day', 86400],
-  ['hour', 3600],
-  ['minute', 60],
-  ['second', 1],
-];
+import { DATE_UNITS } from 'constants/date';
+import { DEFAULT_LANGUAGE } from 'constants/locale';
 
 const getDateDiffs = timestamp => {
   const now = Date.now();
@@ -16,8 +12,7 @@ const getDateDiffs = timestamp => {
   }
 };
 
-export default function useTimeAgo(timestamp) {
+export default function useTimeAgo(timestamp, lang = DEFAULT_LANGUAGE) {
   const { value, unit } = getDateDiffs(timestamp);
-  const rtf = new Intl.RelativeTimeFormat('es', { style: 'short' });
-  return rtf.format(-value, unit);
+  return new Intl.RelativeTimeFormat(lang, { style: 'short' }).format(-value, unit);
 }

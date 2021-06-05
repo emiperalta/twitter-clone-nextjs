@@ -1,14 +1,17 @@
-import Link from 'next/link';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 import Avatar from 'components/Avatar';
 
+import useDateTimeFormat from 'hooks/useDateTimeFormat';
 import useTimeAgo from 'hooks/useTimeAgo';
 
 import styles from 'styles/Deveet.module.css';
 
 export default function Deveet({ deveet }) {
   const router = useRouter();
+
+  const createdAtFormated = useDateTimeFormat(deveet.createdAt);
   const timeago = useTimeAgo(deveet.createdAt);
 
   const handleClick = e => {
@@ -27,11 +30,10 @@ export default function Deveet({ deveet }) {
             <span>
               <strong>{deveet.username}</strong>
             </span>
-            {/* <span>@{deveet.username}</span> */}
             <span>·</span>
             <Link href={`/status/${deveet.id}`}>
               <a className={styles.time}>
-                <time>{timeago}</time>
+                <time title={createdAtFormated}>{timeago}</time>
               </a>
             </Link>
           </div>
