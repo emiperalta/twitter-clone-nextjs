@@ -1,5 +1,9 @@
+import { formatDate } from './useDateTimeFormat';
+
 import { DATE_UNITS } from 'constants/date';
 import { DEFAULT_LANGUAGE } from 'constants/locale';
+
+const isRTFSupported = typeof Intl !== 'undefined' && Intl.RelativeTimeFormat;
 
 const getDateDiffs = timestamp => {
   const now = Date.now();
@@ -12,7 +16,10 @@ const getDateDiffs = timestamp => {
   }
 };
 
-export default function useTimeAgo(timestamp, lang = DEFAULT_LANGUAGE) {
+export default function useTimeAgo(timestamp, { lang = DEFAULT_LANGUAGE } = {}) {
   const { value, unit } = getDateDiffs(timestamp);
+  if (!isRTFSupported) {
+    return formatDate(timestamp, lang);
+  }
   return new Intl.RelativeTimeFormat(lang, { style: 'short' }).format(-value, unit);
 }

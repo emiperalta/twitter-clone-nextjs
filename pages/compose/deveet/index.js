@@ -9,6 +9,7 @@ import useUser from 'hooks/useUser';
 import Avatar from 'components/Avatar';
 import Button from 'components/Button';
 import CloseIcon from 'components/Icons/Close';
+import Header from 'components/Header';
 
 import styles from 'styles/ComposeDeveet.module.css';
 
@@ -77,9 +78,10 @@ export default function ComposeDeveet() {
   return (
     <>
       <Head>
-        <title>Inicio / devter</title>
+        <title>Post a new Deveet / devter</title>
         <meta name='description' content='composer/deveet' />
       </Head>
+      <Header></Header>
       <div className={styles.container}>
         <section className={styles.avatar}>
           {user && <Avatar src={user.avatar} />}

@@ -3,26 +3,35 @@ import Head from 'next/head';
 import { firestore } from 'firebase/admin';
 
 import Deveet from 'components/Deveet';
+import Header from 'components/Header';
+import Navbar from 'components/Navbar';
 
 export default function DeveetPage({ deveet }) {
   return (
     <>
       <Head>
         <title>
-          {deveet.username} en devter: {`"${deveet.content}"`}
+          {deveet.username} on devter: {`"${deveet.content}"`}
         </title>
         <meta name='description' content={deveet.content} />
       </Head>
-      <Deveet deveet={deveet} />
+      <Header>
+        <h2>Tweet</h2>
+      </Header>
+      <div>
+        <Deveet deveet={deveet} />
+      </div>
+      <Navbar />
+      <style jsx>{`
+        div {
+          flex: 1;
+        }
+      `}</style>
     </>
   );
 }
 
 export async function getStaticPaths() {
-  /*const res = await fetch('http://localhost:3000/api/deveets');
-  const deveets = await res.json();
-  const paths = deveets.map(deveet => ({ params: { id: deveet.id } }));
-  return { paths, fallback: false };*/
   return firestore
     .collection('deveets')
     .get()
@@ -43,13 +52,6 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context) {
   const { id } = context.params;
-  /*const res = await fetch(`http://localhost:3000/api/deveets/${id}`);
-  if (res.ok) {
-    const deveet = await res.json();
-    return {
-      props: { deveet },
-    };
-  }*/
   return firestore
     .collection('deveets')
     .doc(id)

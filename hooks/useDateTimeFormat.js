@@ -2,7 +2,7 @@ import { DEFAULT_LANGUAGE } from 'constants/locale';
 
 const isDTFSupported = typeof Intl !== 'undefined' && Intl.DateTimeFormat;
 
-export const formatDate = (timestamp, { lang = DEFAULT_LANGUAGE }) => {
+export const formatDate = (timestamp, { lang = DEFAULT_LANGUAGE } = {}) => {
   const date = new Date(timestamp);
   const options = {
     year: 'numeric',
